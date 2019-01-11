@@ -34,6 +34,25 @@ POST /config/foo.bar.baz => creates foo.bar.baz
 PATCH /config/foo.bar.baz => updates foo.bar.baz
 ```
 
+## Securing The Endpoint
+
+There's no built in security, but you can easily wrap this in your own
+middleware. Example:
+
+```javascript
+const jwt = require('jwt')
+
+app.use(async (ctx, next) => {
+  const authCookie = ctx.cookies.get('some-auth-cookie')
+  const permissions = authCookie && jwt.decode(authCookie).permissions
+  const canEditConfig = permissions.split(',').includes('configManager')
+  if (canEditConfig) {
+    conf('/config')(ctx, next)
+  }
+  awawit next()
+})
+```
+
 ## License
 
 [MIT](./LICENSE.md)
