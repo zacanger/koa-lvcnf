@@ -15,10 +15,10 @@
   },
   "homepage": "https://github.com/zacanger/koa-lvcnf#readme",
   "keywords": [
-    "middelware",
+    "config",
     "koa",
     "lvcnf",
-    "config"
+    "middleware"
   ],
   "license": "MIT",
   "main": "index.js",
