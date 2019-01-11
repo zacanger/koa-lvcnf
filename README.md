@@ -15,10 +15,14 @@ WIP, does nothing yet
 ```javascript
 const Koa = require('koa')
 const app = new Koa()
-const conf = require('koa-lvcnf')
+const Config = require('lvcnf')
+const koaConfig = require('koa-lvcnf')
+
+// config instance to pass into the middleware
+const config = new Config(initialConfig)
 
 // other middlewares
-app.use(conf('/config')) // route prefix
+app.use(koaConfig({ prefix: '/config', config })) // route prefix
 
 app.listen(8888, () => {
   console.log('i am an app!')
@@ -47,9 +51,9 @@ app.use(async (ctx, next) => {
   const permissions = authCookie && jwt.decode(authCookie).permissions
   const canEditConfig = permissions.split(',').includes('configManager')
   if (canEditConfig) {
-    conf('/config')(ctx, next)
+    koaConfig({ prefix, config })(ctx, next)
   }
-  awawit next()
+  await next()
 })
 ```
 

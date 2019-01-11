@@ -1,21 +1,23 @@
-const conf = require('lvcnf')
+const Config = require('lvcnf')
 
 const parseKV = (s = '') => s.split('=')
 
-module.exports = (prefix) =>
+module.exports = ({ prefix, config: conf }) =>
   async (ctx, next) => {
+    if (!(conf instanceof Config)) {
+      throw new TypeError('Expected config to be instance of Config')
+    }
+    if (typeof prefix !== 'string') {
+      throw new TypeError('Expected string prefix')
+    }
+    ctx.type = 'application/json'
     const pf = `${prefix}/`.replace(/\/\//, '/')
     if (ctx.request.path.startsWith(pf)) {
-      const key = ctx.request.path.replace(pf, '')
+      const pv = ctx.request.path.replace(pf, '')
       switch (ctx.request.method) {
         case 'GET':
-          if (key.length) {
-            ctx.body = conf.get(key)
-            return
-          } else {
-            ctx.body = conf.getAll()
-            return
-          }
+          ctx.body = conf.get(pv)
+          return
         case 'DELETE':
           // todo: no key handler, no length handler
           if (pf.length) {
@@ -41,6 +43,9 @@ module.exports = (prefix) =>
             ctx.status = 204
             ctx.body = null
           }
+          return
+        default:
+          ctx.body = null
           return
       }
     }
