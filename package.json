@@ -1,6 +1,6 @@
 {
   "name": "koa-lvcnf",
-  "description": "koa-lvcnf",
+  "description": "Koa middleware for lvconf.",
   "version": "0.0.1",
   "author": {
     "name": "Zac Anger",
@@ -15,8 +15,10 @@
   },
   "homepage": "https://github.com/zacanger/koa-lvcnf#readme",
   "keywords": [
-    "",
-    "koa-lvcnf"
+    "middelware",
+    "koa",
+    "lvcnf",
+    "config"
   ],
   "license": "MIT",
   "main": "index.js",
