@@ -59,4 +59,8 @@ app.use(async (ctx, next) => {
 
 ## License
 
+## todo
+
+POST should be json and get merged with current config
+
 [MIT](./LICENSE.md)
