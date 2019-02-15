@@ -1,7 +1,7 @@
 {
   "name": "koa-lvcnf",
   "description": "Koa middleware for lvconf.",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "author": {
     "name": "Zac Anger",
     "email": "zac@zacanger.com",
