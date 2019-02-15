@@ -2,8 +2,6 @@
 
 Koa middleware for [lvcnf](https://npmjs.com/package/lvcnf).
 
-WIP, does nothing yet
-
 --------
 
 ## Installation
@@ -34,7 +32,7 @@ GET /config => all config values
 GET /config/foo => config for foo
 GET /config/foo.bar.baz => the baz value in { foo: { bar: { baz } } }
 DELETE /config/foo.bar.baz => deletes foo.bar.baz
-POST /config/foo.bar.baz => creates foo.bar.baz
+POST /config { "foo": { "bar": 1 } } => merged with current config
 PATCH /config/foo.bar.baz => updates foo.bar.baz
 ```
 
@@ -58,9 +56,5 @@ app.use(async (ctx, next) => {
 ```
 
 ## License
-
-## todo
-
-POST should be json and get merged with current config
 
 [MIT](./LICENSE.md)

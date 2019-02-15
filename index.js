@@ -1,4 +1,5 @@
 const Config = require('lvcnf')
+const parseBody = require('co-body')
 
 const parseKV = (s = '') => s.split('=')
 
@@ -19,7 +20,6 @@ module.exports = ({ prefix, config: conf }) =>
           ctx.body = conf.get(pv)
           return
         case 'DELETE':
-          // todo: no key handler, no length handler
           if (pf.length) {
             conf.delete(pf)
             ctx.status = 204
@@ -27,16 +27,12 @@ module.exports = ({ prefix, config: conf }) =>
           ctx.body = null
           return
         case 'POST':
-          // todo: no key handler, no length handler
-          if (pf.length) {
-            const kv = parseKV(pv)
-            conf.set(kv[0], kv[1])
-            ctx.status = 201
-            ctx.body = null
-          }
+          const newConfig = await parseBody.json(ctx)
+          conf.merge(newConfig)
+          ctx.status = 201
+          ctx.body = null
           return
         case 'PATCH':
-          // todo: no key handler, no length handler
           if (pf.length) {
             const kv = parseKV(pv)
             conf.set(kv[0], kv[1])
